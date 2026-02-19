@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ZIP Upload Progress</title>
+</head>
+<body>
+  <h2>Upload Progress</h2>
+  <input id="uploadId" placeholder="Enter upload_id" />
+  <button onclick="start()">Track</button>
+
+  <p id="status"></p>
+  <p id="percent"></p>
+
+  <script>
+    function start() {
+      const id = document.getElementById("uploadId").value;
+
+      setInterval(async () => {
+        const res = await fetch(`http://localhost:8000/progress/${id}`);
+        const data = await res.json();
+        document.getElementById("status").innerText =
+          "Status: " + data.status;
+        document.getElementById("percent").innerText =
+          "Progress: " + data.percent + "%";
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
